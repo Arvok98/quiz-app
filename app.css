@@ -7,9 +7,9 @@
   *
 */
 
-.card{
+.card {
   width: 500px;
   margin: 0 auto;
   border: 1px solid blue;
-  padding: 100px
+  padding: 100px;
 }

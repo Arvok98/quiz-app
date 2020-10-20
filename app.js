@@ -1,29 +1,61 @@
+/* eslint-disable indent */
+/* eslint-disable strict */
 /**
  * Example store structure
  */
 const store = {
   // 5 or more questions are required
-  questions: [
-    {
-      question: 'What color is broccoli?',
+  questions: [{
+      question: 'What kind of animal is a Tuna?',
       answers: [
-        'red',
-        'orange',
-        'pink',
-        'green'
+        'Mammal',
+        'Fish',
+        'Bird',
+        'Reptile'
       ],
-      correctAnswer: 'green'
+      correctAnswer: 'Fish'
     },
     {
-      question: 'What is the current year?',
+      question: 'What kind of animal is a Bear?',
       answers: [
-        '1970',
-        '2015',
-        '2019',
-        '2005'
+        'Mammal',
+        'Fish',
+        'Bird',
+        'Reptile'
       ],
-      correctAnswer: '2019'
-    }
+      correctAnswer: 'Mammal'
+    },
+    {
+      question: 'What kind of animal is a Lizard?',
+      answers: [
+        'Mammal',
+        'Fish',
+        'Bird',
+        'Reptile'
+      ],
+      correctAnswer: 'Reptile'
+    },
+    {
+      question: 'What kind of animal is a Parrot?',
+      answers: [
+        'Mammal',
+        'Fish',
+        'Bird',
+        'Reptile'
+      ],
+      correctAnswer: 'Bird'
+    },
+    {
+      question: 'What kind of animal is a Whale?',
+      answers: [
+        'Mammal',
+        'Fish',
+        'Bird',
+        'Reptile'
+      ],
+      correctAnswer: 'Mammal'
+    },
+
   ],
   quizStarted: false,
   questionNumber: 0,
@@ -58,18 +90,18 @@ const store = {
 // These functions handle events (submit, click, etc)
 
 
-function startPage(){
+function startPage() {
   let startPage = `
   <div class="card">
     <h2>Welcome to my quiz</h2>
-    <p>It's going to be great</p>
+    <p>It's going to be great!</p>
     <button id="start">Start Quiz</button>
 
   </div>`;
   return startPage;
 }
 
-function questionPage(){
+function questionPage() {
   let question = store.questions[store.questionNumber];
 
   console.log(question);
@@ -81,6 +113,10 @@ function questionPage(){
         <input type="radio" name="answer" value="${question.answers[0]}">
         <label> ${question.answers[1]}</label>
         <input type="radio" name="answer" value="${question.answers[1]}">
+        <label> ${question.answers[2]}</label>
+        <input type="radio" name="answer" value="${question.answers[0]}">
+        <label> ${question.answers[3]}</label>
+        <input type="radio" name="answer" value="${question.answers[0]}">
         <button type="submit">Submit your answer</button>
     </form>
 
@@ -90,41 +126,41 @@ function questionPage(){
 
 }
 
-function handleStartQuiz(){
-    $('main').on('click','#start',function(){
-          store.quizStarted=true;
-          render();
-
-    })
-
-}
-
-function handleAnswerSubmit(){
-    $("main").on("submit", "form", function(evt){
-      evt.preventDefault();
-        store.questionNumber++;
-        render();
-
-    })
-
-
-
-}
-
-function render(){
-  console.log
-      if(store.quizStarted ===false){
-        $('main').html(startPage());
-      } else if(store.quizStarted){
-        $('main').html(questionPage());
-      
-      }
-}
-
-function main(){
+function handleStartQuiz() {
+  $('main').on('click', '#start', function () {
+    store.quizStarted = true;
     render();
-    handleStartQuiz();
-    handleAnswerSubmit();
+
+  })
+
+}
+
+function handleAnswerSubmit() {
+  $("main").on("submit", "form", function (evt) {
+    evt.preventDefault();
+    store.questionNumber++;
+    render();
+
+  })
+
+
+
+}
+
+function render() {
+  console.log
+  if (store.quizStarted === false) {
+    $('main').html(startPage());
+  } else if (store.quizStarted) {
+    $('main').html(questionPage());
+
+  }
+}
+
+function main() {
+  render();
+  handleStartQuiz();
+  handleAnswerSubmit();
 
 }
 
