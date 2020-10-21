@@ -80,54 +80,111 @@ const store = {
 /********** TEMPLATE GENERATION FUNCTIONS **********/
 
 // These functions return HTML templates
+function startPage() {
+  let startPage = `
+  <div class="startBox">
+  <h2>Welcome to the Amazing Animal Quiz</h2>
+  <p>How well do you know your Animal Types</p>
+  <button id="start">Start Quiz</button>
+
+</div>`;
+return startPage
+}
+
+function questionPage() {
+  let question = store.questions[store.questionNumber];
+  var questionPage = `
+  <div class="questionBox">
+  <h2>${question.question}</h2>
+ <form>
+      <label> ${question.answers[0]}</label>
+      <input type="radio" name="answer" value="${question.answers[0]}">
+      <label> ${question.answers[1]}</label>
+      <input type="radio" name="answer" value="${question.answers[1]}">
+      <label> ${question.answers[2]}</label>
+      <input type="radio" name="answer" value="${question.answers[2]}">
+      <label> ${question.answers[3]}</label>
+      <input type="radio" name="answer" value="${question.answers[3]}">
+      <button type="submit">Submit your answer</button>
+  </form>
+</div>
+<div>
+<p>Score: ${store.score} / 5</p>
+</div>`;
+  return questionPage;
+
+}
+
+function AnswerBox() {
+  let correct = store.questions[store.questionNumber].correctAnswer
+  let userInput = $("input[name='answer']:checked").val()
+    if (userInput === correct) {
+      store.score++
+      feedbackBoxCorrect()
+    }
+    else { 
+      feedbackBoxIncorrect()
+      } 
+}
+
+function feedbackBoxCorrect (){
+  const feedbackBox = `    
+  <div class="correctBox">
+  <h2>GOT IT!!!</h2>
+  <p>Score: ${store.score} / 5</p>
+  <button class="continue">Continue Quiz</button>
+</div>`
+return $('main').html(feedbackBox)
+}
+
+function feedbackBoxIncorrect () {
+  const feedbackBox = `
+  <div class="incorrectBox">
+  <h2>NOPE!!!</h2>
+  <p>Score: ${store.score} / 5</p>
+  <button class="continue">Continue Quiz</button>
+</div>`
+return $('main').html(feedbackBox)
+} 
+
+function finalScoreBox () {
+  let finalScore = `
+  <div class="finalBox">
+  <h2>YOU SCORED</h2>
+  <p>Score: ${store.score}</p>
+  <button class="restart">Restart Quiz</button>
+</div>`
+return finalScore
+}
 
 /********** RENDER FUNCTION(S) **********/
 
 // This function conditionally replaces the contents of the <main> tag based on the state of the store
 
+function render() {
+  if (store.quizStarted === false) {
+    $('main').html(startPage());
+  } 
+  else if (store.quizStarted) {
+    if (store.questionNumber > 4) {
+      store.score = `${(store.score / 5) *100}%`
+      $('main').html(finalScoreBox())
+    }
+    else {
+      
+      $('main').html(questionPage());
+    }
+    
+
+  }
+}
+
 /********** EVENT HANDLER FUNCTIONS **********/
 
 // These functions handle events (submit, click, etc)
-
-
-function startPage() {
-  let startPage = `
-  <div class="card">
-    <h2>Welcome to my quiz</h2>
-    <p>It's going to be great!</p>
-    <button id="start">Start Quiz</button>
-
-  </div>`;
-  return startPage;
-}
-
-function questionPage() {
-  let question = store.questions[store.questionNumber];
-
-  console.log(question);
-  let questionPage = `
-  <div class="card">
-    <h2>${question.question}</h2>
-   <form>
-        <label> ${question.answers[0]}</label>
-        <input type="radio" name="answer" value="${question.answers[0]}">
-        <label> ${question.answers[1]}</label>
-        <input type="radio" name="answer" value="${question.answers[1]}">
-        <label> ${question.answers[2]}</label>
-        <input type="radio" name="answer" value="${question.answers[0]}">
-        <label> ${question.answers[3]}</label>
-        <input type="radio" name="answer" value="${question.answers[0]}">
-        <button type="submit">Submit your answer</button>
-    </form>
-
-
-  </div>`;
-  return questionPage;
-
-}
-
 function handleStartQuiz() {
-  $('main').on('click', '#start', function () {
+  $('main').on('click', '#start', function (e) {
+    e.preventDefault()
     store.quizStarted = true;
     render();
 
@@ -135,33 +192,38 @@ function handleStartQuiz() {
 
 }
 
-function handleAnswerSubmit() {
-  $("main").on("submit", "form", function (evt) {
-    evt.preventDefault();
-    store.questionNumber++;
+function handleAnswerSubmit () {
+  $("main").on("submit", "form", function (e) {
+    e.preventDefault()
+    AnswerBox();
+    
+})
+}
+
+function handleContinue () {
+  $('main').on('click', '.continue', function() {
+    store.questionNumber++
     render();
-
   })
-
-
-
 }
 
-function render() {
-  console.log
-  if (store.quizStarted === false) {
-    $('main').html(startPage());
-  } else if (store.quizStarted) {
-    $('main').html(questionPage());
-
-  }
+function handleRestart () {
+  $('main').on('click', '.restart', function () {
+    store.questionNumber = 0;
+    store.score = 0;
+    store.quizStarted = false;
+    render();
+  })
 }
+
+// Main
 
 function main() {
   render();
   handleStartQuiz();
   handleAnswerSubmit();
-
+  handleContinue();
+  handleRestart();
 }
 
 
