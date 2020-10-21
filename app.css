@@ -16,10 +16,6 @@ body{
   font-family: Verdana, Geneva, Tahoma, sans-serif;
 }
 
-.quiz, .summary{
-  display: none;
-}
-
 div {
   width: 100%;
   margin: 0 auto;
@@ -40,8 +36,8 @@ div {
   margin: 0 -10px;
 }
 
-.selected {
-  background-color: #a2ff00;
+.options:hover{
+  background-color: #A2FF00;
   color: #1D1905;
 }
 
