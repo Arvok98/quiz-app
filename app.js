@@ -98,13 +98,13 @@ function questionPage() {
   <h2>${question.question}</h2>
  <form>
       <label> ${question.answers[0]}</label>
-      <input type="radio" name="answer" value="${question.answers[0]}">
+      <input type="radio" name="answer" value="${question.answers[0]}" required>
       <label> ${question.answers[1]}</label>
-      <input type="radio" name="answer" value="${question.answers[1]}">
+      <input type="radio" name="answer" value="${question.answers[1]}" required>
       <label> ${question.answers[2]}</label>
-      <input type="radio" name="answer" value="${question.answers[2]}">
+      <input type="radio" name="answer" value="${question.answers[2]}" required>
       <label> ${question.answers[3]}</label>
-      <input type="radio" name="answer" value="${question.answers[3]}">
+      <input type="radio" name="answer" value="${question.answers[3]}" required>
       <button type="submit">Submit your answer</button>
   </form>
 </div>
