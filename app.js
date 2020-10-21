@@ -131,6 +131,7 @@ function feedbackBoxCorrect (){
   const feedbackBox = `    
   <div class="correctBox">
   <h2>GOT IT!!!</h2>
+  
   <p>Score: ${store.score} / 5</p>
   <button class="continue">Continue Quiz</button>
 </div>`
