@@ -1,3 +1,6 @@
+/* eslint-disable quotes */
+/* eslint-disable semi */
+/* eslint-disable no-undef */
 /* eslint-disable indent */
 /* eslint-disable strict */
 /**
@@ -62,6 +65,7 @@ const store = {
   score: 0
 };
 
+
 /**
  * 
  * Technical requirements:
@@ -93,18 +97,21 @@ const store = {
 function startPage() {
   let startPage = `
   <div class="card">
-    <h2>Welcome to my quiz</h2>
-    <p>It's going to be great!</p>
+    <h2>Welcome to the Amazing Animal Quiz</h2>
+    <p>How much do you think you know about Animals ?</p>
     <button id="start">Start Quiz</button>
 
   </div>`;
   return startPage;
 }
 
+
+
 function questionPage() {
   let question = store.questions[store.questionNumber];
 
   console.log(question);
+
   let questionPage = `
   <div class="card">
     <h2>${question.question}</h2>
@@ -114,17 +121,23 @@ function questionPage() {
         <label> ${question.answers[1]}</label>
         <input type="radio" name="answer" value="${question.answers[1]}">
         <label> ${question.answers[2]}</label>
-        <input type="radio" name="answer" value="${question.answers[0]}">
+        <input type="radio" name="answer" value="${question.answers[2]}">
         <label> ${question.answers[3]}</label>
-        <input type="radio" name="answer" value="${question.answers[0]}">
+        <input type="radio" name="answer" value="${question.answers[3]}">
         <button type="submit">Submit your answer</button>
     </form>
-
-
+  </div>
+  <div>
+  <p>Score: ${store.score} </p>
   </div>`;
+
   return questionPage;
 
 }
+
+
+
+
 
 function handleStartQuiz() {
   $('main').on('click', '#start', function () {
@@ -132,36 +145,61 @@ function handleStartQuiz() {
     render();
 
   })
-
 }
 
 function handleAnswerSubmit() {
   $("main").on("submit", "form", function (evt) {
     evt.preventDefault();
-    store.questionNumber++;
-    render();
+    AnswerBox();
+
+    //render();
 
   })
-
-
-
 }
 
+function AnswerBox() {
+  let correct = store.questions[store.questionNumber].correctAnswer;
+  let userInput = $('[type="radio"]:checked').val()
+  //console.log(correct)
+  if (userInput === correct) {
+    $('main').html(`<div class="correctBox">
+<h2>GOT IT!!!</h2>
+<p>Score: #</p>
+<button class="continue">Continue Quiz</button>
+</div>`)
+  } else {
+    $('main').html(`<div class="incorrectBox">
+<h2>NOPE!!!</h2>
+<p>Score: #</p>
+<button class="continue">Continue Quiz</button>
+</div>`)
+  }
+}
+
+
+function handleContinue() {
+  $('main').on('click', '.continue', function (e) {
+    e.preventDefault();
+    store.questionNumber++;
+    render();
+  })
+}
+
+
 function render() {
-  console.log
   if (store.quizStarted === false) {
     $('main').html(startPage());
   } else if (store.quizStarted) {
     $('main').html(questionPage());
-
   }
 }
 
 function main() {
   render();
+  startPage();
   handleStartQuiz();
   handleAnswerSubmit();
-
+  handleContinue();
 }
 
 
