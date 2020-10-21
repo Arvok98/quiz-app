@@ -22,6 +22,12 @@ div {
   border: 1px solid #F4FFD6;
 }
 
+img{
+  width: 400px;
+  border: 1px solid #F4FFD6;
+  border-radius: 5px;
+}
+
 .button{
   background-color: #ffffff;
   color: #1D1905;
@@ -41,21 +47,6 @@ div {
   color: #1D1905;
 }
 
-.group {
-  display: flex;
-  flex-direction: column;
-  margin-bottom: 100px;
-}
-
-.item {
-  flex: 1;
-  margin: 10px;
-}
-
-.item-double {
-  flex: 3;
-  margin: 10px;
-}
 
 /* Groups & Items  (Mobile First) */
 .group {
@@ -102,11 +93,6 @@ div {
   margin: 0 -10px;
 }
 
-.align-stretch    { align-items: stretch;    }
-.align-flex-start { align-items: flex-start; }
-.align-flex-end   { align-items: flex-end;   }
-.align-center     { align-items: center;     }
-.align-baseline   { align-items: baseline;   }
 
 .options {
     display: inline-flex;
