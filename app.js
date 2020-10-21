@@ -1,3 +1,4 @@
+/* eslint-disable no-empty */
 /* eslint-disable quotes */
 /* eslint-disable semi */
 /* eslint-disable no-undef */
@@ -16,7 +17,7 @@ const store = {
         'Bird',
         'Reptile'
       ],
-      correctAnswer: 'Fish'
+      correctAnswer: 'Fish',
     },
     {
       question: 'What kind of animal is a Bear?',
@@ -65,6 +66,13 @@ const store = {
   score: 0
 };
 
+imageArr = [
+  `<img src='images/tuna.jpg' alt='a tuna swimming in the ocean'>`,
+  `<img src='images/bear.jpg' alt='a tuna bear going for a walk'>`,
+  `<img src='images/lizard.jpg' alt='a lizard resting on a branch'>`,
+  `<img src='images/parrot.jpg' alt='a parrot posing for the camera'>`,
+  `<img src='images/whale.jpg' alt='an orca whale swimming in the ocean'>`
+]
 
 /**
  * 
@@ -109,12 +117,10 @@ function startPage() {
 
 function questionPage() {
   let question = store.questions[store.questionNumber];
-
-  console.log(question);
-
   let questionPage = `
   <div class="card">
     <h2>${question.question}</h2>
+    ${imageCycler()}
    <form>
         <label> ${question.answers[0]}</label>
         <input type="radio" name="answer" value="${question.answers[0]}">
@@ -130,13 +136,20 @@ function questionPage() {
   <div>
   <p>Score: ${store.score} </p>
   </div>`;
-
   return questionPage;
 
 }
 
+function finalScoreBox() {
+  let finalScore = `
+  <div class='finalBox'>
+  <h2>YOU SCORED</h2>
+  <p>Score: #</p>
+  <button class='restart'>restartQuiz</button>
+  </div>`
 
-
+  return finalScore
+}
 
 
 function handleStartQuiz() {
@@ -155,6 +168,11 @@ function handleAnswerSubmit() {
     //render();
 
   })
+}
+
+function imageCycler() {
+  let chosenOne = imageArr[store.questionNumber]
+  return chosenOne;
 }
 
 function AnswerBox() {
@@ -190,7 +208,11 @@ function render() {
   if (store.quizStarted === false) {
     $('main').html(startPage());
   } else if (store.quizStarted) {
-    $('main').html(questionPage());
+    if (store.questionNumber > 4) {
+      $('main').html(finalScoreBox())
+    } else {
+      $('main').html(questionPage());
+    }
   }
 }
 
